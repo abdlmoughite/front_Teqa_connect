@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -7,7 +6,12 @@ import {
   ClipboardList,
   User,
   LogOut,
+  ChevronDown,
+  ChevronUp,
+  Users,
+  Inbox,
 } from "lucide-react";
+import { useState } from "react";
 
 export default function SaidbarConfirmation({ active }) {
   const menuItems = [
@@ -17,6 +21,8 @@ export default function SaidbarConfirmation({ active }) {
     { name: "Liste commandes", icon: <ClipboardList className="h-5 w-5" />, to: "/liste_commandes_counfirmation" },
     { name: "Profil", icon: <User className="h-5 w-5" />, to: "/profil_counfirmation" },
   ];
+
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -48,6 +54,51 @@ export default function SaidbarConfirmation({ active }) {
             {item.name}
           </NavLink>
         ))}
+
+        {/* Dropdown Espace Confirmation */}
+        <div>
+          <button
+            onClick={() => setOpenConfirm(!openConfirm)}
+            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-white/70 hover:bg-white/5 hover:text-white transition"
+          >
+            <span className="flex items-center gap-3">
+              <Users className="h-5 w-5" />
+              Espace Confirmation
+            </span>
+            {openConfirm ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </button>
+
+          {openConfirm && (
+            <div className="ml-8 mt-1 space-y-1">
+              <NavLink
+                to="/demandes_confirmation"
+                className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition
+                  ${
+                    active === "demandes"
+                      ? "bg-emerald-600 text-white"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                  }`}
+              >
+                <Inbox className="h-4 w-4" /> Liste Demandes
+              </NavLink>
+              <NavLink
+                to="/collaborateurs_confirmation"
+                className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition
+                  ${
+                    active === "collaborateurs"
+                      ? "bg-emerald-600 text-white"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                  }`}
+              >
+                <Users className="h-4 w-4" /> Liste Collaborateurs
+              </NavLink>
+            </div>
+          )}
+        </div>
       </nav>
 
       {/* Logout */}

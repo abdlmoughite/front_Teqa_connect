@@ -97,7 +97,7 @@ const Blacklist =()=> {
         <p class="text-xs text-gray-400">Clients dans la liste noire</p>
       </div>
 
-      
+
 
       <div class="relative">
         <input
